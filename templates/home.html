@@ -8,14 +8,7 @@
 
 {% block content %}
     <div class="row">
-        <div id="chat-container" class="panel panel-default chat-panel">
-            <div class="panel-body" id="panel-content">
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <form id="messageForm" data-socket-url="{{ socket_url }}" method="post">
+        <form id="messageForm" method="post">
             {% if current_user %}
                 <div class="col-md-8 col-md-offset-1">
                     <textarea class="form-control" id="msg-text" rows="2" name="message" placeholder="Your message"></textarea>

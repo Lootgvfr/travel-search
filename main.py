@@ -3,7 +3,7 @@ import tornado.web
 import mongoengine
 
 from settings import *
-from urls import urls
+from url import urls
 
 
 def main():

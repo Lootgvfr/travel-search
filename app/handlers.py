@@ -1,9 +1,7 @@
-import tornado.web
 import tornado.websocket
 
-from models import User, Message
-from helpers import encode_password, check_password
-from settings import host
+from app.helpers import encode_password, check_password
+from models import User
 
 
 class CurrentUserMixin:
