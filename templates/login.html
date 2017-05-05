@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% end %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3>Login</h3>
+            <form id="loginForm" data-link="{{ reverse_url('login') }}" method="post">
+                <span id="error-text" class="error text-danger"></span>
+                {% module xsrf_form_html() %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" name="password" class="form-control" id="pwd">
+                </div>
+                <button id="login" type="submit" class="btn btn-primary ajax-btn">Login</button>
+            </form>
+        </div>
+    </div>
+{% end %}
+
+{% block additional_js %}
+    <script src="{{ static_url('js/login.js') }}"></script>
+{% end %}

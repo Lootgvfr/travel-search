@@ -1,0 +1,27 @@
+body{
+    height: 100%;
+    width: 100%;
+    background-color: #F0F8FF;
+}
+
+.navtop{
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.main-container{
+    border-left: 1px solid #BBBBBB;
+    border-right: 1px solid #BBBBBB;
+    border-bottom: 1px solid #BBBBBB;
+    border-radius: 1px;
+    min-height: 400px;
+    background-color: white;
+}
+
+.content{
+    margin-top: 10px;
+}
+
+.navbar-right{
+    margin-right: 5px;
+}

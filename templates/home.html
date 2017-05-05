@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Chat probably{% end %}
+
+{% block additional_styles %}
+    <link href="{{ static_url('css/home.css') }}" rel="stylesheet">
+{% end %}
+
+{% block content %}
+    <div class="row">
+        <div id="chat-container" class="panel panel-default chat-panel">
+            <div class="panel-body" id="panel-content">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <form id="messageForm" data-socket-url="{{ socket_url }}" method="post">
+            {% if current_user %}
+                <div class="col-md-8 col-md-offset-1">
+                    <textarea class="form-control" id="msg-text" rows="2" name="message" placeholder="Your message"></textarea>
+                </div>
+                <div class="col-md-2">
+                    <button id="send" type="submit" class="btn btn-primary ajax-btn pull-right">Send</button>
+                </div>
+            {% else %}
+                <span class="middle-text">
+                    <a href="{{ reverse_url('login') }}">Login</a> or
+                    <a href="{{ reverse_url('registration') }}">Register</a> to send messages
+                </span>
+            {% end %}
+        </form>
+    </div>
+    <div class="row">
+        <span id="error-text" class="error text-danger middle-text"></span>
+    </div>
+{% end %}
+
+{% block additional_js %}
+    <script src="{{ static_url('js/home.js') }}"></script>
+{% end %}
