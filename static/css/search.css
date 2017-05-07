@@ -1,0 +1,18 @@
+.col-md-3{
+    text-align: center;
+}
+
+.header-row{
+    border: 1px solid #AAAAAA;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.header-row div{
+    font-weight: bold;
+}
+
+.result-row{
+    margin-left: 5px;
+    margin-right: 5px;
+}

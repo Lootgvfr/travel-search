@@ -12,3 +12,5 @@ $(document).ajaxStart(function () {
         $(this).prop('disabled', false);
     });
 });
+
+var travel = angular.module('travel',[]);

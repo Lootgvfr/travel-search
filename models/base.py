@@ -6,3 +6,5 @@ class User(mongoengine.Document):
                                        required=True, unique=True)
     email = mongoengine.EmailField(required=True, unique=True)
     password = mongoengine.StringField(max_length=500, required=True)
+    is_superuser = mongoengine.BooleanField(default=False)
+    is_moderator = mongoengine.BooleanField(default=False)

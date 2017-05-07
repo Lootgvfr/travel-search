@@ -1,4 +1,5 @@
-import tornado.websocket
+from tornado.web import RequestHandler
+from tornado.websocket import WebSocketHandler
 
 from app.helpers import encode_password, check_password
 from models import User
@@ -14,11 +15,11 @@ class CurrentUserMixin:
             return None
 
 
-class BaseHandler(CurrentUserMixin, tornado.web.RequestHandler):
+class BaseHandler(CurrentUserMixin, RequestHandler):
     pass
 
 
-class BaseWebsocketHandler(CurrentUserMixin, tornado.websocket.WebSocketHandler):
+class BaseWebsocketHandler(CurrentUserMixin, WebSocketHandler):
     pass
 
 
@@ -91,3 +92,49 @@ class RegistrationHandler(BaseHandler):
                 'message': str(e)
             }
         self.write(result)
+
+
+class AdminHomeHandler(BaseHandler):
+    def get(self):
+        user = self.get_current_user()
+        if not user.is_superuser:
+            self.set_status(404)
+
+        self.render('admin/home.html')
+
+
+class SearchRequestHandler(BaseHandler):
+    def post(self):
+        self.redirect(self.reverse_url('search-results'))
+
+
+class SearchResultsPageHandler(BaseHandler):
+    def get(self):
+        self.render('search_results.html')
+
+
+class SearchResultsDataHandler(BaseHandler):
+    def get(self):
+        self.write({
+            'type': 'success',
+            'records': [
+                {
+                    'from': 'Kiev',
+                    'to': 'Moscow',
+                    'price': '100 UAH',
+                    'type': 'train',
+                },
+                {
+                    'from': 'Kiev',
+                    'to': 'Moscow',
+                    'price': '200 UAH',
+                    'type': 'bus',
+                },
+                {
+                    'from': 'Kiev',
+                    'to': 'Moscow',
+                    'price': '1000 UAH',
+                    'type': 'flight',
+                },
+            ]
+        })

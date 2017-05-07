@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Search results{% end %}
+
+{% block additional_styles %}
+    <link href="{{ static_url('css/search.css') }}" rel="stylesheet">
+{% end %}
+
+{% block content %}
+    <div ng-app="travel" ng-controller="searchResultsCtrl">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row header-row" data-url="{{ reverse_url('search-results-data') }}">
+                    <div class="col-md-3">From</div>
+                    <div class="col-md-3">To</div>
+                    <div class="col-md-3">Type</div>
+                    <div class="col-md-3">Price</div>
+                </div>
+                <div class="row result-row" ng-repeat="record in records">
+                    <div class="col-md-3" ng-bind="record.from"></div>
+                    <div class="col-md-3" ng-bind="record.to"></div>
+                    <div class="col-md-3" ng-bind="record.type"></div>
+                    <div class="col-md-3" ng-bind="record.price"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% end %}
+
+{% block additional_js %}
+    <script src="{{ static_url('js/search.js') }}"></script>
+{% end %}

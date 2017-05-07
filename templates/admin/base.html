@@ -12,27 +12,24 @@
         <div class="container-fluid">
             <div class="col-md-8 col-md-offset-2">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ reverse_url('home') }}">Home</a></li>
+                    <li><a href="{{ reverse_url('admin-home') }}">Admin home</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    {% if current_user %}
-                        <li><a>Hello, <strong>{{ current_user.username }}</strong></a></li>
-                        {% if current_user.is_superuser %}
-                            <li><a href="{{ reverse_url('admin-home') }}">Admin portal</a></li>
-                        {% end %}
-                        <li><a href="{{ reverse_url('logout') }}">Log out</a></li>
-                    {% else %}
-                        <li><a href="{{ reverse_url('login') }}">Login</a></li>
-                        <li><a href="{{ reverse_url('registration') }}">Register</a></li>
-                    {% end %}
+                    <li><a>Hello, <strong>{{ current_user.username }}</strong></a></li>
+                    <li><a href="{{ reverse_url('home') }}">Main site</a></li>
+                    <li><a href="{{ reverse_url('logout') }}">Log out</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="col-md-8 col-md-offset-2">
-        <div class="container-fluid main-container content">
-            {% block content %}
-            {% end %}
+        <div class="container-fluid main-container">
+            <div class="row">
+                <div class="col-md-12 content">
+                    {% block content %}
+                    {% end %}
+                </div>
+            </div>
         </div>
     </div>
     <script src="/static/third-party/jquery-3.1.1.js"></script>
