@@ -8,13 +8,18 @@
 
 {% block content %}
     <div class="row">
-        <form id="searchForm" method="post" action="{{ reverse_url('search-request') }}">
+        <form id="searchForm" method="post" data-options-url="{{ reverse_url('city-options', 'srch') }}"
+              action="{{ reverse_url('search-request') }}">
             {% raw xsrf_form_html() %}
             <div class="col-md-3 col-md-offset-2">
-                <input id="from" type="text" class="form-control" placeholder="From">
+                <input id="from" type="text" class="form-control" placeholder="From" list="from-options" autocomplete="off">
+                <datalist id="from-options">
+                </datalist>
             </div>
             <div class="col-md-3">
-                <input id="to" type="text" class="form-control" placeholder="To">
+                <input id="to" type="text" class="form-control" placeholder="To" list="to-options" autocomplete="off">
+                <datalist id="to-options">
+                </datalist>
             </div>
             <div class="col-md-2">
                 <button id="send" type="submit" class="btn btn-primary ajax-btn" style="margin-top:0;">Search</button>

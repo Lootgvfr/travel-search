@@ -138,3 +138,28 @@ class SearchResultsDataHandler(BaseHandler):
                 },
             ]
         })
+
+
+class CityOptionsHandler(BaseHandler):
+    def get(self, search_term):
+        self.write({
+            'type': 'success',
+            'options': [
+                {
+                    'city': 'Kiev',
+                    'country': 'Ukraine',
+                },
+                {
+                    'city': 'Moscow',
+                    'country': 'Russia',
+                },
+                {
+                    'city': 'Paris',
+                    'country': 'France',
+                },
+                {
+                    'city': 'Berlin',
+                    'country': 'Germany',
+                },
+            ]
+        })
