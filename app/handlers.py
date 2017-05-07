@@ -1,7 +1,7 @@
 from tornado.web import RequestHandler
 from tornado.websocket import WebSocketHandler
 
-from app.helpers import encode_password, check_password
+from app.helpers import encode_password, check_password, search_options
 from models import User
 
 
@@ -144,22 +144,5 @@ class CityOptionsHandler(BaseHandler):
     def get(self, search_term):
         self.write({
             'type': 'success',
-            'options': [
-                {
-                    'city': 'Kiev',
-                    'country': 'Ukraine',
-                },
-                {
-                    'city': 'Moscow',
-                    'country': 'Russia',
-                },
-                {
-                    'city': 'Paris',
-                    'country': 'France',
-                },
-                {
-                    'city': 'Berlin',
-                    'country': 'Germany',
-                },
-            ]
+            'options': search_options(search_term),
         })
