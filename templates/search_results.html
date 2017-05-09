@@ -11,20 +11,31 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered table-striped table-hover main-table"
-                       data-url="{{ reverse_url('search-results-data', guid) }}">
+                       data-url="{{ reverse_url('search-results-data', guid) }}"
+                       ng-show="(records.length != 0 && done) || !done" ng-cloak>
                     <tr>
                         <th>From</th>
                         <th>To</th>
-                        <th>Type</th>
+                        <th>Transport type</th>
+                        <th>Duration</th>
                         <th>Price</th>
                     </tr>
-                    <tr ng-repeat="record in records">
+                    <tr ng-repeat="record in records track by $index">
                         <td ng-bind="record.from"></td>
                         <td ng-bind="record.to"></td>
                         <td ng-bind="record.type"></td>
+                        <td ng-bind="record.duration"></td>
                         <td ng-bind="record.price"></td>
                     </tr>
                 </table>
+                <div style="text-align: center; margin-bottom: 10px; font-size: 16px; font-weight: bold;"
+                     ng-cloak ng-show="!done">
+                    Loading...
+                </div>
+                <div style="text-align: center; margin-bottom: 10px; font-size: 16px; font-weight: bold;"
+                     ng-cloak ng-hide="(records.length != 0 && done) || !done">
+                    Unfortunately, no results found that match your request
+                </div>
             </div>
         </div>
     </div>

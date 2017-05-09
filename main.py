@@ -10,7 +10,7 @@ def main():
     mongoengine.connect(mongo_db_name)
 
     app = tornado.web.Application(urls, **settings)
-    app.listen(port)
+    app.listen(port, address='0.0.0.0')
     print('Server running on port ' + str(port))
     tornado.ioloop.IOLoop.current().start()
 

@@ -7,6 +7,7 @@ travel.controller('searchResultsCtrl', function($scope, $http) {
         .then(function (response) {
             if (response.data.type === 'success') {
                 $scope.records = response.data.records;
+                $scope.done = true;
             }
         });
 });

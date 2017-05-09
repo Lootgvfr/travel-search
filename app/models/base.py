@@ -25,6 +25,8 @@ class SearchRequest(mongoengine.Document):
     price_upper_limit = mongoengine.IntField(min_value=0, default=None)
 
     result = mongoengine.StringField(required=False)
+    full_response = mongoengine.StringField(required=False)
+    dt_request = mongoengine.DateTimeField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(SearchRequest, self).__init__(*args, **kwargs)

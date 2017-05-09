@@ -1,3 +1,5 @@
+import json
+
 from tornado.web import HTTPError
 
 from app.helpers import search_options, validate_search_form
@@ -9,6 +11,7 @@ from .base import BaseHandler
 class HomeHandler(BaseHandler):
     def get(self):
         self.render('home.html')
+        return
 
 
 class SearchRequestHandler(BaseHandler):
@@ -41,6 +44,7 @@ class SearchRequestHandler(BaseHandler):
             'type': 'redirect',
             'redirect_url': self.reverse_url('search-results', s_request.guid)
         })
+        return
 
 
 class SearchResultsPageHandler(BaseHandler):
@@ -48,6 +52,7 @@ class SearchResultsPageHandler(BaseHandler):
         if len(SearchRequest.objects(guid=guid)) != 1:
             raise HTTPError(404)
         self.render('search_results.html', guid=guid)
+        return
 
 
 class SearchResultsDataHandler(BaseHandler):
@@ -58,11 +63,17 @@ class SearchResultsDataHandler(BaseHandler):
 
         search = req[0]
         if search.result:
-            self.write(search.result)
+            self.write({
+                'type': 'success',
+                'records': json.loads(search.result, encoding='utf-8'),
+            })
         else:
             backend = Backend(search)
-            self.write(backend.search())
-        self.set_header('Content-Type', 'application/json')
+            self.write({
+                'type': 'success',
+                'records': await backend.search(),
+            })
+        return
 
 
 class CityOptionsHandler(BaseHandler):
@@ -71,3 +82,4 @@ class CityOptionsHandler(BaseHandler):
             'type': 'success',
             'options': await search_options(search_term),
         })
+        return

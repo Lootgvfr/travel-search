@@ -1,7 +1,9 @@
+import datetime
+
 from tornado.web import HTTPError
 
 from app.helpers import encode_password, check_password
-from app.models import User
+from app.models import User, SearchRequest
 from .base import BaseHandler
 
 
@@ -9,11 +11,13 @@ class LogoutHandler(BaseHandler):
     def get(self):
         self.set_secure_cookie('auth', '')
         self.redirect(self.reverse_url('home'))
+        return
 
 
 class LoginHandler(BaseHandler):
     def get(self):
         self.render('login.html')
+        return
 
     def post(self):
         username = self.get_argument('username')
@@ -36,6 +40,7 @@ class LoginHandler(BaseHandler):
                 'message': 'Invalid credentials'
             }
         self.write(result)
+        return
 
 
 class RegistrationHandler(BaseHandler):
@@ -45,6 +50,7 @@ class RegistrationHandler(BaseHandler):
             raise HTTPError(404)
 
         self.render('registration.html')
+        return
 
     def post(self):
         user = self.get_current_user()
@@ -76,6 +82,7 @@ class RegistrationHandler(BaseHandler):
                 'message': str(e)
             }
         self.write(result)
+        return
 
 
 class AdminHomeHandler(BaseHandler):
@@ -84,4 +91,7 @@ class AdminHomeHandler(BaseHandler):
         if not user or not user.is_superuser:
             raise HTTPError(404)
 
-        self.render('admin/home.html')
+        last_hour = datetime.datetime.now() - datetime.timedelta(hours=1)
+        last_hour_reqs = len(SearchRequest.objects(dt_request__gte=last_hour))
+        self.render('admin/home.html', last_hour_reqs=last_hour_reqs)
+        return

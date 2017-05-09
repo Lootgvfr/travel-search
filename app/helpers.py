@@ -29,6 +29,7 @@ def check_password(user, password):
 
 async def search_options(search_term):
     http_client = AsyncHTTPClient()
+    search_term = search_term.replace(' ', '%20')
 
     if city_search_mashape:
         url = base_api_url_m + 'Geocode?countryCode=UA&languageCode=UA&query={}'.format(search_term)
