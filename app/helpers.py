@@ -8,7 +8,7 @@ from settings import base_api_url_m, headers, headers_m, base_api_url,\
     api_key, city_search_mashape
 
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-city_types = ['village', 'town', 'city', 'capital']
+city_types = ['village', 'town', 'city', 'capital', 'metropolis']
 
 
 def encode_password(password):
