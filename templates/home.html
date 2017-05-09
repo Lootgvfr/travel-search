@@ -11,23 +11,74 @@
         <form id="searchForm" method="post" data-options-url="{{ reverse_url('city-options', 'srch') }}"
               action="{{ reverse_url('search-request') }}">
             {% raw xsrf_form_html() %}
-            <div class="col-md-3 col-md-offset-2">
-                <input id="from" type="text" class="form-control" placeholder="From" list="from-options" autocomplete="off">
-                <datalist id="from-options">
-                </datalist>
+            <div style="text-align: center; margin-bottom: 10px; font-size: 22px; font-weight: bold;">
+                Customize your search
             </div>
-            <div class="col-md-3">
-                <input id="to" type="text" class="form-control" placeholder="To" list="to-options" autocomplete="off">
-                <datalist id="to-options">
-                </datalist>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1 col-sm-4 col-xs-12">
+                    <input id="from" name="from" type="text" class="form-control"
+                           placeholder="Origin" list="from-options" autocomplete="off"
+                           data-toggle="tooltip" data-animation="" title="">
+                    <datalist id="from-options">
+                    </datalist>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <input id="to" name="to" type="text" class="form-control"
+                           placeholder="Destination" list="to-options" autocomplete="off"
+                           data-toggle="tooltip" data-animation="" title="">
+                    <datalist id="to-options">
+                    </datalist>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-12">
+                    <button id="send" type="submit" class="btn btn-primary ajax-btn" style="margin-top:0;">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Search
+                    </button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button id="send" type="submit" class="btn btn-primary ajax-btn" style="margin-top:0;">Search</button>
+            <div class="row" style="margin-top: 5px;">
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            <strong>Transport types</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row" id="transport_types" data-animation="" data-toggle="tooltip" title="">
+                            <div class="col-md-4 col-xs-4">
+                                <input type="checkbox" name="search_bus" id="bus" title="Bus" checked>
+                                <label class="tr-type" for="bus">Bus</label>
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <input type="checkbox" name="search_flight" id="flight" title="Flight" checked>
+                                <label class="tr-type" for="flight">Flight</label>
+                            </div>
+                            <div class="col-md-4 col-xs-4">
+                                <input type="checkbox" name="search_train" id="train" title="Train" checked>
+                                <label class="tr-type" for="train">Train</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-12" style="text-align:center;">
+                        <strong>Price range</strong>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <input id="price_lower" name="price_lower" type="number" class="form-control"
+                                   placeholder="From" autocomplete="off"
+                                   data-toggle="tooltip" data-animation="" title="">
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <input id="price_upper" name="price_upper" type="number" class="form-control"
+                                   placeholder="To" autocomplete="off"
+                                   data-toggle="tooltip" data-animation="" title="">
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
-    </div>
-    <div class="row">
-        <span id="error-text" class="error text-danger middle-text"></span>
     </div>
 {% end %}
 

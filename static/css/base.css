@@ -5,8 +5,8 @@ body{
 }
 
 .navtop{
-    border-radius: 0px;
-    margin-bottom: 0px;
+    border-radius: 0;
+    margin-bottom: 0;
 }
 
 .main-container{
@@ -16,11 +16,9 @@ body{
     border-radius: 1px;
     min-height: 400px;
     background-color: white;
+    padding: 10px 25px 10px 25px;
 }
 
-.content{
-    padding-top: 10px;
-}
 
 .navbar-right{
     margin-right: 5px;

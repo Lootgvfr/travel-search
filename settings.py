@@ -17,8 +17,21 @@ host = '0.0.0.0:' + str(port)
 
 with open(os.path.join(os.path.dirname(__file__), 'api.key')) as file:
     api_key = file.readline()
-base_api_url = 'https://rome2rio12.p.mashape.com/'
+
+base_api_url = 'https://free.rome2rio.com/api/1.4/json/'
+
 headers = {
     'Accept': 'application/json',
-    'X-Mashape-Key': api_key,
+}
+
+city_search_mashape = True
+
+with open(os.path.join(os.path.dirname(__file__), 'api_m.key')) as file:
+    api_m_key = file.readline()
+
+base_api_url_m = 'https://rome2rio12.p.mashape.com/'
+
+headers_m = {
+    'X-Mashape-Key': api_m_key,
+    'Accept': 'application/json',
 }

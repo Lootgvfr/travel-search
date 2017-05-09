@@ -3,7 +3,7 @@
  */
 
 travel.controller('searchResultsCtrl', function($scope, $http) {
-    $http.get($('.header-row').attr('data-url'))
+    $http.get($('.main-table').attr('data-url'))
         .then(function (response) {
             if (response.data.type === 'success') {
                 $scope.records = response.data.records;

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% end %}</title>
+    <link href="/static/third-party/tether.min.css" rel="stylesheet">
     <link href="/static/third-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ static_url('css/base.css') }}" rel="stylesheet">
     {% block additional_styles %}{% end %}
@@ -19,11 +20,9 @@
                         <li><a>Hello, <strong>{{ current_user.username }}</strong></a></li>
                         {% if current_user.is_superuser %}
                             <li><a href="{{ reverse_url('admin-home') }}">Admin portal</a></li>
+                            <li><a href="{{ reverse_url('registration') }}">Register</a></li>
                         {% end %}
                         <li><a href="{{ reverse_url('logout') }}">Log out</a></li>
-                    {% else %}
-                        <li><a href="{{ reverse_url('login') }}">Login</a></li>
-                        <li><a href="{{ reverse_url('registration') }}">Register</a></li>
                     {% end %}
                 </ul>
             </div>
@@ -36,6 +35,7 @@
         </div>
     </div>
     <script src="/static/third-party/jquery-3.1.1.js"></script>
+    <script src="/static/third-party/tether.min.js"></script>
     <script src="/static/third-party/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/third-party/angular.min.js"></script>
     <script src="{{ static_url('js/base.js') }}"></script>

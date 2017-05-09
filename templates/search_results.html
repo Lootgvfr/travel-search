@@ -10,18 +10,21 @@
     <div ng-app="travel" ng-controller="searchResultsCtrl">
         <div class="row">
             <div class="col-md-12">
-                <div class="row header-row" data-url="{{ reverse_url('search-results-data') }}">
-                    <div class="col-md-3">From</div>
-                    <div class="col-md-3">To</div>
-                    <div class="col-md-3">Type</div>
-                    <div class="col-md-3">Price</div>
-                </div>
-                <div class="row result-row" ng-repeat="record in records">
-                    <div class="col-md-3" ng-bind="record.from"></div>
-                    <div class="col-md-3" ng-bind="record.to"></div>
-                    <div class="col-md-3" ng-bind="record.type"></div>
-                    <div class="col-md-3" ng-bind="record.price"></div>
-                </div>
+                <table class="table table-bordered table-striped table-hover main-table"
+                       data-url="{{ reverse_url('search-results-data', guid) }}">
+                    <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr ng-repeat="record in records">
+                        <td ng-bind="record.from"></td>
+                        <td ng-bind="record.to"></td>
+                        <td ng-bind="record.type"></td>
+                        <td ng-bind="record.price"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
