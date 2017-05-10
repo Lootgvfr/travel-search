@@ -1,7 +1,7 @@
 body{
     height: 100%;
     width: 100%;
-    background-color: #F0F8FF;
+    background-size:cover;
     font-family: 'Palatino Linotype';
 }
 
@@ -14,9 +14,9 @@ body{
     border-left: 1px solid #BBBBBB;
     border-right: 1px solid #BBBBBB;
     border-bottom: 1px solid #BBBBBB;
-    border-radius: 1px;
-    min-height: 400px;
-    background-color: white;
+    border-radius: 3px;
+    min-height: 250px;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 10px 25px 10px 25px;
 }
 

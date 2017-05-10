@@ -10,7 +10,7 @@
     <div ng-app="travel" ng-controller="searchResultsCtrl">
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered table-striped table-hover main-table"
+                <table class="table table-bordered table-hover main-table"
                        data-url="{{ reverse_url('search-results-data', guid) }}"
                        ng-show="(records.length != 0 && done) || !done" ng-cloak>
                     <tr>
