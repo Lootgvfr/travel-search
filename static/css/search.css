@@ -1,18 +1,104 @@
-.col-md-3{
+.main-table{
+    margin-top: 15px;
+    padding: 0;
+}
+
+.main-container{
+    background-color: rgba(255, 255, 255, 0.92);
+}
+
+.main-table div{
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 5px 0 5px 0;
+}
+
+.table-row{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-shadow: inset 0 0 5px #ccc;
+}
+
+.type-icon{
+    height: 20px;
+    display: inline-block;
+}
+
+.center-cell{
     text-align: center;
 }
 
-.header-row{
-    border: 1px solid #AAAAAA;
-    margin-right: 5px;
-    margin-left: 5px;
+.oneline-cell{
+    margin-top: 10px;
 }
 
-.header-row div{
-    font-weight: bold;
+.price-text{
+    display: inline-block;
 }
 
-.result-row{
-    margin-left: 5px;
-    margin-right: 5px;
+.sort-col:hover{
+    cursor: pointer;
+}
+
+.table-row div:hover{
+    cursor: default;
+}
+
+.sort-text{
+    display: inline-block;
+}
+
+.part-row{
+    padding: 0;
+    margin: 0;
+}
+
+.details{
+    margin: auto;
+    display: block;
+    width: 110px;
+    text-align: center;
+    font-size:11px;
+    text-decoration: underline;
+    margin-top: -8px;
+}
+
+.details:hover{
+    cursor: pointer;
+}
+
+.small-name{
+    font-size: 11px;
+}
+
+.col-segs{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.segment-row{
+    margin: 10px 0 10px 0;
+}
+
+.airport{
+    color: #777;
+    font-size: 10px;
+}
+
+.lower-part{
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    margin-top: 8px;
+}
+
+.med-text{
+    font-size: 12px;
+}
+
+.point-name{
+    margin-left: 15px;
 }
