@@ -15,6 +15,9 @@ mongo_db_name = 'travel-search'
 port = 8891
 host = '0.0.0.0:' + str(port)
 
+geonames_base_url = 'http://api.geonames.org/'
+geonames_username = 'lootgvfr'
+
 with open(os.path.join(os.path.dirname(__file__), 'api.key')) as file:
     api_key = file.readline()
 

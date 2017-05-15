@@ -129,3 +129,25 @@ function process_errors(errors) {
             .tooltip('show');
     }
 }
+
+$('.type-div').hover(function () {
+    var img = $(this).find('img');
+    var src = img.attr('src');
+    img.attr('src', src.replace('inactive', 'active'));
+}, function () {
+    var img = $(this).find('img');
+    var src = img.attr('src');
+    if (!$(this).find('input').is(':checked')){
+        img.attr('src', src.replace('active', 'inactive'));
+    }
+});
+
+$('.type-div').click(function () {
+    var input = $(this).find('input');
+    if (input.is(':checked')){
+        input.prop('checked', false);
+    }
+    else{
+        input.prop('checked', true);
+    }
+});

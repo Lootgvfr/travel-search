@@ -13,4 +13,4 @@ $(document).ajaxStart(function () {
     });
 });
 
-var travel = angular.module('travel',[]);
+var travel = angular.module('travel', ['ngAnimate']);

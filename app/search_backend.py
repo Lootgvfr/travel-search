@@ -4,6 +4,7 @@ import json
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import url_escape
 
+from app.models import CityCache
 from settings import api_key, base_api_url, headers
 
 
@@ -30,21 +31,31 @@ class Backend:
     }
 
     _weekdays = {
-        0: 'Sun',
-        1: 'Mon',
-        2: 'Tue',
-        3: 'Wed',
-        4: 'Thu',
-        5: 'Fri',
-        6: 'Sat',
+        0: 'Нд',
+        1: 'Пн',
+        2: 'Вт',
+        3: 'Ср',
+        4: 'Чт',
+        5: 'Пт',
+        6: 'Сб',
     }
 
     _icons = {
-        'bus': '/static/images/bus-inactive.png',
-        'train': '/static/images/train-inactive.png',
-        'plane': '/static/images/plane-inactive.png',
-        'walk': '/static/images/walk.png',
+        'bus': '/static/images/bus-active.png',
+        'train': '/static/images/train-active.png',
+        'plane': '/static/images/plane-active.png',
+        'foot': '/static/images/walk.png',
         'tram': '/static/images/tram.png',
+        'subway': '/static/images/train-active.png',
+    }
+
+    _names = {
+        'bus': 'Автобус',
+        'train': 'Потяг',
+        'plane': 'Літак',
+        'foot': 'Пішки',
+        'tram': 'Трамвай',
+        'subway': 'Метро',
     }
 
     _max_place_name_len = 20
@@ -76,8 +87,18 @@ class Backend:
             flags.append('noAir')
 
         parameters = self._base_params.copy()
-        parameters['oName'] = url_escape(self._search_request.req_from)
-        parameters['dName'] = url_escape(self._search_request.req_to)
+        try:
+            city_from, country_from = self._search_request.req_from.split(', ')
+            city_to, country_to = self._search_request.req_to.split(', ')
+            cache_from = CityCache.objects(name_uk=city_from, country_uk=country_from)[0]
+            cache_to = CityCache.objects(name_uk=city_to, country_uk=country_to)[0]
+
+            parameters['oName'] = url_escape('{}, {}'.format(cache_from.name_en, cache_from.country_en))
+            parameters['dName'] = url_escape('{}, {}'.format(cache_to.name_en, cache_to.country_en))
+        except Exception as e:
+            print(e)
+            parameters['oName'] = url_escape(self._search_request.req_from)
+            parameters['dName'] = url_escape(self._search_request.req_to)
 
         flags_str = '&'.join(flag for flag in flags)
         params_str = '&'.join('{}={}'.format(k, v) for k, v in parameters.items())
@@ -93,8 +114,9 @@ class Backend:
 
             # create route dict
             rt = {
-                'from': response_dict['places'][route['depPlace']]['longName'],
-                'to':  response_dict['places'][route['arrPlace']]['longName'],
+                'from': self._search_request.req_from,
+                'to': self._search_request.req_to,
+                'from_seg': response_dict['places'][route['depPlace']]['shortName'],
                 'transfers': len(route['segments']) - 1,
                 'duration': self._parse_duration(route['totalDuration']),
                 'duration_raw': route['totalDuration'],
@@ -137,7 +159,7 @@ class Backend:
                     'to': self._limit_name(response_dict['places'][segment['arrPlace']]['shortName']),
                     'to_full': response_dict['places'][segment['arrPlace']]['shortName'],
                     'transport_type': {
-                        'name': transport_type,
+                        'name': self._names[transport_type],
                         'icon': self._icons[transport_type],
                     },
                 }
@@ -188,7 +210,7 @@ class Backend:
 
             # parse transport types
             transport_types = [{
-                'name': tp,
+                'name': self._names[tp],
                 'icon': self._icons[tp],
             } for tp in types_set]
 
@@ -208,9 +230,9 @@ class Backend:
 
         result = ''
         if hrs:
-            result += '{} hrs '.format(hrs)
+            result += '{} год. '.format(hrs)
         if mins:
-            result += '{} min'.format(mins)
+            result += '{} хв.'.format(mins)
 
         return result
 
@@ -220,12 +242,12 @@ class Backend:
         days.insert(0, bits[-1])
 
         if '0' not in days and len(days) == 7:
-            result = 'Every day'
+            result = 'Кожен день'
         else:
             weekdays = [self._weekdays[i] for i, day in enumerate(days) if day == '1']
-            if weekdays[0] == 'Sun':
+            if weekdays[0] == 'Нд':
                 weekdays = weekdays[1:]
-                weekdays.append('Sun')
+                weekdays.append('Нд')
             result = ', '.join(day for day in weekdays)
 
         return result
@@ -235,35 +257,35 @@ class Backend:
         has_price_range = bool(p.get('priceLow'))
 
         res = {
-            'price': '{} {}'.format(p['price'], p['currency']),
+            'price': '{} {}'.format(p['price'], 'грн'),
             'has_price_range': has_price_range,
             'price_raw': p['price'],
         }
         if has_price_range:
-            res['price_lower'] = '{} {}'.format(p['priceLow'], p['currency'])
-            res['price_upper'] = '{} {}'.format(p['priceHigh'], p['currency'])
+            res['price_lower'] = '{} {}'.format(p['priceLow'], 'грн')
+            res['price_upper'] = '{} {}'.format(p['priceHigh'], 'грн')
 
         return res
 
     def _parse_frequency(self, frequency):
         if 0.9 < frequency < 1.1:
-            return 'Every week'
+            return 'Кожний тиждень'
 
         period = 1 / frequency
         days_period = period * 7
         if days_period >= 1.1:
-            return 'Every {} days'.format(int(days_period))
+            return 'Кожні {} днів'.format(int(days_period))
         elif 0.9 < days_period < 1.1:
-            return 'Every day'
+            return 'Кожен день'
 
         hours_period = days_period * 24
         if hours_period >= 1.1:
-            return 'Every {} hours'.format(int(hours_period))
+            return 'Кожні {} годин'.format(int(hours_period))
         elif 0.9 < hours_period < 1.1:
-            return 'Every hour'
+            return 'Кожну годину'
 
         minutes_period = hours_period * 60
-        return 'Every {} minutes'.format(int(minutes_period))
+        return 'Кожні {} хвилин'.format(int(minutes_period))
 
     def _limit_name(self, name):
         if len(name) > self._max_place_name_len:

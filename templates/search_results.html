@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Search results{% end %}
+{% block title %}Результати пошуку{% end %}
 
 {% block additional_styles %}
     <link href="{{ static_url('css/search.css') }}" rel="stylesheet">
@@ -12,7 +12,7 @@
             <div class="col-md-2 col-sm-4 col-xs-12">
                 <a href="{{ reverse_url('home') }}" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-chevron-left"></span>
-                    Back to search
+                    Назад до пошуку
                 </a>
             </div>
         </div>
@@ -20,24 +20,24 @@
             <div class="table-header main-table col-md-12"
                     data-url="{{ reverse_url('search-results-data', guid) }}"
                     ng-show="(records.length != 0 && done) || !done" ng-cloak>
-                <div class="col-xs-3">From/To</div>
-                <div class="col-xs-2">Transport types</div>
+                <div class="col-xs-3">Звідки/куди</div>
+                <div class="col-xs-2">Види транспорту</div>
                 <div class="col-xs-2 sort-col" ng-click="sort('transfers')">
-                    <span class="sort-text">Transfers</span>
+                    <span class="sort-text">Пересадки</span>
                     <span ng-show="sort_type == 'transfers' && !sort_reverse"
                           class="glyphicon glyphicon-chevron-up" ng-cloak></span>
                     <span ng-show="sort_type == 'transfers' && sort_reverse"
                           class="glyphicon glyphicon-chevron-down" ng-cloak></span>
                 </div>
                 <div class="col-xs-3 sort-col" ng-click="sort('duration_raw')">
-                    <span class="sort-text">Duration</span>
+                    <span class="sort-text">Час в дорозі</span>
                     <span ng-show="sort_type == 'duration_raw' && !sort_reverse"
                           class="glyphicon glyphicon-chevron-up" ng-cloak></span>
                     <span ng-show="sort_type == 'duration_raw' && sort_reverse"
                           class="glyphicon glyphicon-chevron-down" ng-cloak></span>
                 </div>
                 <div class="col-xs-2 sort-col" ng-click="sort('price_raw')">
-                    <span class="sort-text">Price</span>
+                    <span class="sort-text">Ціна</span>
                     <span ng-show="sort_type == 'price_raw' && !sort_reverse"
                           class="glyphicon glyphicon-chevron-up" ng-cloak></span>
                     <span ng-show="sort_type == 'price_raw' && sort_reverse"
@@ -55,13 +55,13 @@
                     <div class="col-xs-2">
                         <div class="center-cell oneline-cell">
                             <img class="type-icon" ng-repeat="tran in record.transport_types"
-                                 ng-src="{{!tran.icon}}" title="{{!tran.name}}"/>
+                                 ng-src="{{!tran.icon}}" title="{{!tran.name}}" ng-cloak/>
                         </div>
                     </div>
                     <div class="col-xs-2 center-cell oneline-cell" ng-bind="record.transfers"></div>
                     <div class="col-xs-3 center-cell oneline-cell" ng-bind="record.duration"></div>
                     <div class="col-xs-2 center-cell oneline-cell"
-                        title="{{!record.price_lower + ' to ' + record.price_upper}}">
+                        title="{{!record.price_lower + ' до ' + record.price_upper}}">
                         <div ng-bind="record.price" class="price-text"></div>
                         <span ng-show="record.has_price_range" class="glyphicon glyphicon-info-sign"
                               style="margin-top:4px;"></span>
@@ -75,7 +75,7 @@
                         </span>
                         <div ng-cloak ng-show="record.show_details" class="segments">
                             <div class="row lower-part">
-                                <div class="small-name col-xs-2 center-cell point-name" ng-bind="record.from"></div>
+                                <div class="small-name col-xs-2 center-cell point-name" ng-bind="record.from_seg"></div>
                             </div>
                             <div ng-repeat="segment in record.segments">
                                 <div class="row segment-row">
@@ -88,14 +88,13 @@
                                             <div class="col-xs-3 center-cell med-text" ng-bind="segment.frequency">
                                             </div>
                                             <div class="col-xs-2 center-cell med-text">
-                                                <a href="{{!segment.schedule_url}}" title="{{!segment.schedule_name}}" ng-show="segment.schedule_name" style="display:block;">Schedule</a>
-                                                <a href="{{!segment.book_url}}" title="{{!segment.book_name}}" ng-show="segment.book_name" style="display:block;">Booking</a>
+                                                <a href="{{!segment.schedule_url}}" title="{{!segment.schedule_name}}" ng-show="segment.schedule_name" style="display:block;">Розклад</a>
+                                                <a href="{{!segment.book_url}}" title="{{!segment.book_name}}" ng-show="segment.book_name" style="display:block;">Замовлення</a>
                                             </div>
-
                                         </div>
                                         <div ng-switch-when="air">
                                             <div class="col-xs-3 center-cell med-text">
-                                                <span class="small-name">Departure:</span>
+                                                <span class="small-name">Виліт:</span>
                                                 <span ng-bind="segment.time_start"></span>
                                                 <span class="airport">
                                                     (<span ng-bind="segment.airport_start_code"
@@ -103,7 +102,7 @@
                                                     </span>)
                                                 </span>
                                                 <br/>
-                                                <span class="small-name">Arrival:</span>
+                                                <span class="small-name">Прибуття:</span>
                                                 <span ng-bind="segment.time_end"></span>
                                                 <span class="airport">
                                                     (<span ng-bind="segment.airport_end_code"
@@ -113,12 +112,12 @@
                                             </div>
                                             <div class="col-xs-2 center-cell med-text">
                                                 <div ng-switch="segment.days">
-                                                    <div ng-switch-when="Every day">
+                                                    <div ng-switch-when="Кожен день">
                                                         <span ng-bind="segment.days"></span>
                                                     </div>
                                                     <div ng-switch-default>
                                                         <div title="{{!segment.days}}">
-                                                            Certain days
+                                                            Певні дні
                                                             <span ng-show="record.has_price_range" class="glyphicon glyphicon-info-sign"
                                                                   style="margin-top:6px;"></span>
                                                         </div>
@@ -130,7 +129,7 @@
                                     <div class="col-xs-3 center-cell med-text" ng-bind="segment.duration">
                                     </div>
                                     <div class="col-xs-2 center-cell med-text">
-                                        <div title="{{!segment.price_lower + ' to ' + segment.price_upper}}">
+                                        <div title="{{!segment.price_lower + ' до ' + segment.price_upper}}">
                                             <div ng-bind="segment.price" class="price-text"></div>
                                             <span ng-show="segment.has_price_range"
                                                   class="glyphicon glyphicon-info-sign"

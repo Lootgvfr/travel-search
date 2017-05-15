@@ -8,3 +8,15 @@ class User(mongoengine.Document):
     password = mongoengine.StringField(max_length=500, required=True)
     is_superuser = mongoengine.BooleanField(default=False)
     is_moderator = mongoengine.BooleanField(default=False)
+
+
+class CityCache(mongoengine.Document):
+    name_en = mongoengine.StringField(max_length=500, required=True)
+    country_en = mongoengine.StringField(max_length=500, required=True)
+    name_uk = mongoengine.StringField(max_length=500, required=True)
+    country_uk = mongoengine.StringField(max_length=500, required=True)
+
+
+class RequestCache(mongoengine.Document):
+    request_en = mongoengine.StringField(max_length=500, required=True)
+    request_uk = mongoengine.StringField(max_length=500, required=True)

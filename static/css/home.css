@@ -29,3 +29,21 @@
 .navbar-inverse{
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+.chkb{
+    display:none;
+}
+
+.type-div img{
+    width: 16px;
+    height: 16px;
+    margin-top: -3px;
+}
+
+.type-div:hover{
+    cursor: pointer;
+}
+
+.tr-type{
+    cursor: pointer;
+}

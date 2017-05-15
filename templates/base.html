@@ -13,16 +13,16 @@
         <div class="container-fluid">
             <div class="col-md-8 col-md-offset-2">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ reverse_url('home') }}">Home</a></li>
+                    <li><a href="{{ reverse_url('home') }}">Головна</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user %}
-                        <li><a>Hello, <strong>{{ current_user.username }}</strong></a></li>
+                        <li><a>Доброго дня, <strong>{{ current_user.username }}</strong></a></li>
                         {% if current_user.is_superuser %}
-                            <li><a href="{{ reverse_url('admin-home') }}">Admin portal</a></li>
-                            <li><a href="{{ reverse_url('registration') }}">Register</a></li>
+                            <li><a href="{{ reverse_url('admin-home') }}">Панель адміністратора</a></li>
+                            <li><a href="{{ reverse_url('registration') }}">Реєстрація</a></li>
                         {% end %}
-                        <li><a href="{{ reverse_url('logout') }}">Log out</a></li>
+                        <li><a href="{{ reverse_url('logout') }}">Вихід</a></li>
                     {% end %}
                 </ul>
             </div>
@@ -38,6 +38,7 @@
     <script src="/static/third-party/tether.min.js"></script>
     <script src="/static/third-party/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/third-party/angular.min.js"></script>
+    <script src="/static/third-party/angular-animate.min.js"></script>
     <script src="{{ static_url('js/base.js') }}"></script>
     {% block additional_js %}{% end %}
 </body>
