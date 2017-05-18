@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Персональний кабінет{% end %}
+{% block title %}Особистий кабінет{% end %}
 
 {% block additional_styles %}
     <link href="{{ static_url('css/search.css') }}" rel="stylesheet">
@@ -8,6 +8,7 @@
 
 {% block content %}
     <div ng-app="travel" ng-controller="cabinetCtrl" id="app">
+        <h3>Особистий кабінет</h3>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#routes">Збережені маршрути</a></li>
             <li><a data-toggle="tab" href="#requests">Ваші пошукові запити</a></li>

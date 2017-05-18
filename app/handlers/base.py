@@ -16,7 +16,3 @@ class CurrentUserMixin:
 
 class BaseHandler(CurrentUserMixin, RequestHandler):
     pass
-
-
-class BaseWebsocketHandler(CurrentUserMixin, WebSocketHandler):
-    pass

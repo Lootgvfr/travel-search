@@ -10,8 +10,8 @@ body{
 .navtop{
     border-radius: 0;
     margin-bottom: 0;
-    background-color: rgba(255, 255, 255, 0.8);
     font-size: 16px;
+    background-color: rgba(0,0,0, 0.75);
 }
 
 .main-container{
@@ -30,4 +30,8 @@ body{
 
 .center-cell{
     text-align: center;
+}
+
+#login, #register{
+    margin-bottom: 30px;
 }

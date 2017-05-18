@@ -33,7 +33,7 @@ class LoginHandler(BaseHandler):
         except Exception as e:
             result = {
                 'type': 'error',
-                'message': 'Invalid credentials'
+                'message': 'Логін чи пароль є невірним'
             }
         self.write(result)
         return
@@ -51,10 +51,10 @@ class RegistrationHandler(BaseHandler):
         repeat_password = self.get_argument('repeat-password')
         try:
             if not password == repeat_password:
-                raise ValueError('Passwords do not match')
+                raise ValueError('Введені паролі не співпадають')
 
             if User.objects(username=username) or User.objects(email=email):
-                raise ValueError('User with given username or email already exists')
+                raise ValueError('Користувач з заданим ім\'ям чи поштою вже зареєстрований')
 
             p = encode_password(password)
             User(username=username, email=email, password=p).save()

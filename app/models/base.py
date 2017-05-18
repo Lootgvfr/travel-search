@@ -37,4 +37,5 @@ class SavedOffer(mongoengine.Document):
 
     def __init__(self, *args, **kwargs):
         super(SavedOffer, self).__init__(*args, **kwargs)
-        self.dt_created = datetime.datetime.now()
+        if not self.dt_created:
+            self.dt_created = datetime.datetime.now()
