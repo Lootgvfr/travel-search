@@ -45,17 +45,17 @@
                     </div>
                     <div class="col-md-12">
                         <div class="row" id="transport_types" data-animation="" data-toggle="tooltip" title="">
-                            <div class="col-md-4 col-xs-4 type-div" id="type-bus">
+                            <div class="col-md-4 col-xs-4 type-div center-cell" id="type-bus">
                                 <input class="chkb" type="checkbox" name="search_bus" id="bus" title="Bus" checked>
                                 <img src="{{ static_url('images/bus-active.png') }}"/>
                                 <label class="tr-type">Автобус</label>
                             </div>
-                            <div class="col-md-4 col-xs-4 type-div" id="type-flight">
+                            <div class="col-md-4 col-xs-4 type-div center-cell" id="type-flight">
                                 <input class="chkb" type="checkbox" name="search_flight" id="flight" title="Flight" checked>
                                 <img src="{{ static_url('images/plane-active.png') }}"/>
                                 <label class="tr-type">Літак</label>
                             </div>
-                            <div class="col-md-4 col-xs-4 type-div" id="type-train">
+                            <div class="col-md-4 col-xs-4 type-div center-cell" id="type-train">
                                 <input class="chkb" type="checkbox" name="search_train" id="train" title="Train" checked>
                                 <img src="{{ static_url('images/train-active.png') }}"/>
                                 <label class="tr-type">Потяг</label>
@@ -70,12 +70,12 @@
                     <div class="row">
                         <div class="col-md-6 col-xs-6">
                             <input id="price_lower" name="price_lower" type="number" class="form-control"
-                                   placeholder="Від" autocomplete="off"
+                                   placeholder="Від (грн.)" autocomplete="off"
                                    data-toggle="tooltip" data-animation="" title="">
                         </div>
                         <div class="col-md-6 col-xs-6">
                             <input id="price_upper" name="price_upper" type="number" class="form-control"
-                                   placeholder="До" autocomplete="off"
+                                   placeholder="До (грн.)" autocomplete="off"
                                    data-toggle="tooltip" data-animation="" title="">
                         </div>
                     </div>

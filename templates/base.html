@@ -14,15 +14,20 @@
             <div class="col-md-8 col-md-offset-2">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ reverse_url('home') }}">Головна</a></li>
+                    <li><a href="{{ reverse_url('best-offers') }}">Найкращі пропозиції</a></li>
                 </ul>
+
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user %}
                         <li><a>Доброго дня, <strong>{{ current_user.username }}</strong></a></li>
                         {% if current_user.is_superuser %}
                             <li><a href="{{ reverse_url('admin-home') }}">Панель адміністратора</a></li>
-                            <li><a href="{{ reverse_url('registration') }}">Реєстрація</a></li>
                         {% end %}
+                        <li><a href="{{ reverse_url('cabinet') }}">Ваш кабінет</a></li>
                         <li><a href="{{ reverse_url('logout') }}">Вихід</a></li>
+                    {% else %}
+                        <li><a href="{{ reverse_url('login') }}">Вхід</a></li>
+                        <li><a href="{{ reverse_url('registration') }}">Реєстрація</a></li>
                     {% end %}
                 </ul>
             </div>

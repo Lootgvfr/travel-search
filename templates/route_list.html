@@ -1,0 +1,112 @@
+<div class="table-row col-xs-12" ng-repeat="record in records | orderBy:sort_type:sort_reverse">
+    <div class="row part-row">
+        <div class="col-xs-3">
+            <div class="row" ng-bind="record.from"></div>
+            <div class="row" ng-bind="record.to"></div>
+        </div>
+        <div class="col-xs-2">
+            <div class="center-cell oneline-cell">
+                <img class="type-icon" ng-repeat="tran in record.transport_types"
+                     ng-src="{{!tran.icon}}" title="{{!tran.name}}" ng-cloak/>
+            </div>
+        </div>
+        <div class="col-xs-2 center-cell oneline-cell" ng-bind="record.transfers"></div>
+        <div class="col-xs-3 center-cell oneline-cell" ng-bind="record.duration"></div>
+        <div class="col-xs-2 center-cell oneline-cell"
+            title="{{!record.price_lower + ' до ' + record.price_upper}}">
+            <div ng-bind="record.price" class="price-text"></div>
+            <span ng-show="record.has_price_range" class="glyphicon glyphicon-info-sign"
+                  style="margin-top:4px;"></span>
+            {% if not best_offers and current_user %}
+                <div id="save-offer" data-url="{{ reverse_url('save-offer', guid, 42069) }}"
+                     class="btn btn-sm btn-primary save-button" ng-hide="record.saved"
+                     ng-disabled="record.saving" ng-click="save(record)">
+                    <span class="glyphicon glyphicon-save"></span>
+                    Зберегти
+                </div>
+                <div class="btn btn-sm btn-default save-button" ng-show="record.saved" disabled>
+                    <span class="glyphicon glyphicon-check"></span>
+                    Збережено
+                </div>
+            {% end %}
+        </div>
+    </div>
+    <div class="row part-row">
+        <div class="col-xs-12 col-segs">
+            <span class="details" ng-click="record.show_details = !record.show_details">
+                <span ng-cloak ng-hide="record.show_details">детальніше</span><span ng-cloak ng-show="record.show_details">сховати</span>
+                <span ng-cloak ng-hide="record.show_details">▾</span><span ng-cloak ng-show="record.show_details">▴</span>
+            </span>
+            <div ng-cloak ng-show="record.show_details" class="segments">
+                <div class="row lower-part">
+                    <div class="small-name col-xs-2 center-cell point-name" ng-bind="record.from_seg"></div>
+                </div>
+                <div ng-repeat="segment in record.segments">
+                    <div class="row segment-row">
+                        <div class="col-xs-2 center-cell">
+                            <img class="type-icon" ng-src="{{!segment.transport_type.icon}}"
+                                 title="{{!segment.transport_type.name}}"/>
+                        </div>
+                        <div ng-switch="segment.segment_type">
+                            <div ng-switch-when="surface">
+                                <div class="col-xs-3 center-cell med-text" ng-bind="segment.frequency">
+                                </div>
+                                <div class="col-xs-2 center-cell med-text">
+                                    <a href="{{!segment.schedule_url}}" title="{{!segment.schedule_name}}" ng-show="segment.schedule_name" style="display:block;">Розклад</a>
+                                    <a href="{{!segment.book_url}}" title="{{!segment.book_name}}" ng-show="segment.book_name" style="display:block;">Замовлення</a>
+                                </div>
+                            </div>
+                            <div ng-switch-when="air">
+                                <div class="col-xs-3 center-cell med-text">
+                                    <span class="small-name">Виліт:</span>
+                                    <span ng-bind="segment.time_start"></span>
+                                    <span class="airport">
+                                        (<span ng-bind="segment.airport_start_code"
+                                              title="{{!segment.airport_start_name}}">
+                                        </span>)
+                                    </span>
+                                    <br/>
+                                    <span class="small-name">Прибуття:</span>
+                                    <span ng-bind="segment.time_end"></span>
+                                    <span class="airport">
+                                        (<span ng-bind="segment.airport_end_code"
+                                              title="{{!segment.airport_end_name}}">
+                                        </span>)
+                                    </span>
+                                </div>
+                                <div class="col-xs-2 center-cell med-text">
+                                    <div ng-switch="segment.days">
+                                        <div ng-switch-when="Кожен день">
+                                            <span ng-bind="segment.days"></span>
+                                        </div>
+                                        <div ng-switch-default>
+                                            <div title="{{!segment.days}}">
+                                                Певні дні
+                                                <span ng-show="record.has_price_range" class="glyphicon glyphicon-info-sign"
+                                                      style="margin-top:6px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 center-cell med-text" ng-bind="segment.duration">
+                        </div>
+                        <div class="col-xs-2 center-cell med-text">
+                            <div title="{{!segment.price_lower + ' до ' + segment.price_upper}}">
+                                <div ng-bind="segment.price" class="price-text"></div>
+                                <span ng-show="segment.has_price_range"
+                                      class="glyphicon glyphicon-info-sign"
+                                      style="margin-top:4px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-name col-xs-2 center-cell point-name"
+                             title="{{!segment.to_full}}">{{!segment.to}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

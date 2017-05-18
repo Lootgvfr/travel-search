@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Персональний кабінет{% end %}
+
+{% block additional_styles %}
+    <link href="{{ static_url('css/search.css') }}" rel="stylesheet">
+{% end %}
+
+{% block content %}
+    <div ng-app="travel" ng-controller="cabinetCtrl" id="app">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#routes">Збережені маршрути</a></li>
+            <li><a data-toggle="tab" href="#requests">Ваші пошукові запити</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="routes" class="tab-pane fade in active">
+                <div class="row">
+                    <div class="table-header main-table col-md-12"
+                            data-url="{{ reverse_url('saved-offers-data') }}"
+                            ng-show="(records.length != 0 && done) || !done" ng-cloak>
+                        <div class="col-xs-3">Звідки/куди</div>
+                        <div class="col-xs-2">Види транспорту</div>
+                        <div class="col-xs-2 sort-col" ng-click="sort('transfers')">
+                            <span class="sort-text">Пересадки</span>
+                            <span ng-show="sort_type == 'transfers' && !sort_reverse"
+                                  class="glyphicon glyphicon-chevron-up" ng-cloak></span>
+                            <span ng-show="sort_type == 'transfers' && sort_reverse"
+                                  class="glyphicon glyphicon-chevron-down" ng-cloak></span>
+                        </div>
+                        <div class="col-xs-3 sort-col" ng-click="sort('duration_raw')">
+                            <span class="sort-text">Час в дорозі</span>
+                            <span ng-show="sort_type == 'duration_raw' && !sort_reverse"
+                                  class="glyphicon glyphicon-chevron-up" ng-cloak></span>
+                            <span ng-show="sort_type == 'duration_raw' && sort_reverse"
+                                  class="glyphicon glyphicon-chevron-down" ng-cloak></span>
+                        </div>
+                        <div class="col-xs-2 sort-col" ng-click="sort('price_raw')">
+                            <span class="sort-text">Ціна</span>
+                            <span ng-show="sort_type == 'price_raw' && !sort_reverse"
+                                  class="glyphicon glyphicon-chevron-up" ng-cloak></span>
+                            <span ng-show="sort_type == 'price_raw' && sort_reverse"
+                                  class="glyphicon glyphicon-chevron-down" ng-cloak></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% include 'route_list.html' %}
+                    <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-show="!done">
+                        Завантаження...
+                    </div>
+                    <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-hide="(records.length != 0 && done) || !done">
+                        Ви ще не зберегли жодного маршруту
+                    </div>
+                </div>
+            </div>
+            <div id="requests" class="tab-pane fade">
+                {% if requests %}
+                    {% for request in requests %}
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-sm-12">
+                                <a href="{{ reverse_url('search-results', request.guid) }}">
+                                    {{ request.req_from }} – {{ request.req_to }}
+                                </a>
+                            </div>
+                        </div>
+                    {% end %}
+                {% else %}
+                    <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-hide="(records.length != 0 && done) || !done">
+                        Ви ще не виконали жодного пошуку
+                    </div>
+                {% end %}
+            </div>
+        </div>
+
+    </div>
+{% end %}
+
+{% block additional_js %}
+    <script src="{{ static_url('js/cabinet.js') }}"></script>
+{% end %}

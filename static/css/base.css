@@ -22,7 +22,10 @@ body{
     padding: 10px 25px 10px 25px;
 }
 
-
 .navbar-right{
     margin-right: 5px;
+}
+
+.center-cell{
+    text-align: center;
 }

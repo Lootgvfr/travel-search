@@ -1,24 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Результати пошуку{% end %}
+{% block title %}Найкращі пропозиції{% end %}
 
 {% block additional_styles %}
     <link href="{{ static_url('css/search.css') }}" rel="stylesheet">
 {% end %}
 
 {% block content %}
-    <div ng-app="travel" ng-controller="searchResultsCtrl" id="app">
-        <div class="row">
-            <div class="col-md-2 col-sm-4 col-xs-12">
-                <a href="{{ reverse_url('home') }}" class="btn btn-sm btn-default">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    Назад до пошуку
-                </a>
-            </div>
-        </div>
+    <div ng-app="travel" ng-controller="bestOffersCtrl" id="app">
         <div class="row">
             <div class="table-header main-table col-md-12"
-                    data-url="{{ reverse_url('search-results-data', guid) }}"
+                    data-url="{{ reverse_url('best-offers-data') }}"
                     ng-show="(records.length != 0 && done) || !done" ng-cloak>
                 <div class="col-xs-3">Звідки/куди</div>
                 <div class="col-xs-2">Види транспорту</div>
@@ -51,12 +43,12 @@
                 Завантаження...
             </div>
             <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-hide="(records.length != 0 && done) || !done">
-                На жаль, за вашим запитом не було знайдено результатів
+                Поки що немає збережених пропозицій
             </div>
         </div>
     </div>
 {% end %}
 
 {% block additional_js %}
-    <script src="{{ static_url('js/search.js') }}"></script>
+    <script src="{{ static_url('js/best_offers.js') }}"></script>
 {% end %}

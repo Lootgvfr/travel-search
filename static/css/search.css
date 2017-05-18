@@ -34,10 +34,6 @@
     display: inline-block;
 }
 
-.center-cell{
-    text-align: center;
-}
-
 .oneline-cell{
     margin-top: 10px;
 }
@@ -110,4 +106,14 @@
 }
 
 .segments{
+}
+
+.save-button{
+    font-size: 12px;
+    padding: 2px 6px 2px 6px;
+    margin-top: 3px;
+}
+
+#requests{
+    padding-top: 10px;
 }

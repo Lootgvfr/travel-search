@@ -1,4 +1,7 @@
 import mongoengine
+import datetime
+
+from .search import Route
 
 
 class User(mongoengine.Document):
@@ -20,3 +23,18 @@ class CityCache(mongoengine.Document):
 class RequestCache(mongoengine.Document):
     request_en = mongoengine.StringField(max_length=500, required=True)
     request_uk = mongoengine.StringField(max_length=500, required=True)
+
+
+class SavedOffer(mongoengine.Document):
+    dt_created = mongoengine.DateTimeField(required=True)
+    type = mongoengine.StringField(choices=['best', 'by_user'], required=True)
+    user = mongoengine.ReferenceField(User)
+
+    pl_from = mongoengine.StringField(max_length=100, required=True)
+    pl_to = mongoengine.StringField(max_length=100, required=True)
+    price = mongoengine.IntField(required=True)
+    route = mongoengine.EmbeddedDocumentField(Route)
+
+    def __init__(self, *args, **kwargs):
+        super(SavedOffer, self).__init__(*args, **kwargs)
+        self.dt_created = datetime.datetime.now()

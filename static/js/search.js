@@ -15,6 +15,23 @@ travel.controller('searchResultsCtrl', function($scope, $http) {
         }
     };
 
+    $scope.save = function(record) {
+        var url = $('#save-offer').attr('data-url').replace('42069', record.order);
+        record.saving = true;
+        $http.get(url)
+            .then(function (response) {
+                record.saving = false;
+                if (response.data.type === 'success') {
+                    record.saved = true;
+                }
+                else if(response.data.type === 'already_saved'){
+                    record.saved = true;
+                }
+            }, function (response) {
+                record.saving = false;
+            });
+    };
+
     $http.get($('.main-table').attr('data-url'))
         .then(function (response) {
             if (response.data.type === 'success') {
@@ -23,5 +40,3 @@ travel.controller('searchResultsCtrl', function($scope, $http) {
             }
         });
 });
-
-
