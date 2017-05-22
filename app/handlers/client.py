@@ -1,8 +1,8 @@
 from tornado.web import HTTPError
 
 from app.helpers import search_options, validate_search_form
-from app.models import SearchRequest, SavedOffer
-from app.search_backend import Backend
+from app.models import SearchRequest, SavedOffer, Flights
+from app.search_backend import SearchBackend
 from .base import BaseHandler
 
 
@@ -69,7 +69,7 @@ class SearchResultsDataHandler(BaseHandler):
                 'records': search.result,
             })
         else:
-            backend = Backend(search)
+            backend = SearchBackend(search)
             self.write({
                 'type': 'success',
                 'records': await backend.search(),
@@ -171,5 +171,18 @@ class SavedOffersDataHandler(BaseHandler):
         self.write({
             'type': 'success',
             'records': routes,
+        })
+        return
+
+
+class FlightChoicesHandler(BaseHandler):
+    def get(self, guid):
+        query = Flights.objects(guid=guid)
+        if len(query) != 1:
+            raise HTTPError(404)
+
+        self.write({
+            'type': 'success',
+            'flights': query[0].result[:6],
         })
         return

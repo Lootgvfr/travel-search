@@ -1,12 +1,77 @@
 {% extends "base.html" %}
 
-{% block title %}Admin panel{% end %}
+{% block title %}Панель адміністратора{% end %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-4 col-xs-6">
-            <h5>Requests sent over the last hour<strong class="pull-right">{{ last_hour_reqs }}
-            </strong></h5>
+<div ng-app="travel" ng-controller="adminCtrl" id="app">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#stats">Статистика</a></li>
+        <li><a data-toggle="tab" href="#prediction">Прогнозування</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="stats" class="tab-pane fade in active">
+            <div class="row col-md-12">
+                <div class="col-md-8 col-xs-8">
+                    <div class="row">
+                        <h4>Кількість запитів, відправлених за останню годину</h4>
+                        <strong class="stat-value">{{ last_hour_reqs }}</strong>
+                    </div>
+                    <div class="row">
+                        <h4>Найпопулярніший маршрут</h4>
+                        <strong class="stat-value">{{ most_popular_route }}</strong>
+                    </div>
+                    <div class="row">
+                        <h4>Зареєстровані користувачі</h4>
+                        <strong class="stat-value">{{ user_total }}</strong>
+                    </div>
+                    <div class="row">
+                        <h4>Користувачі, що зберегли хоча б один маршрут</h4>
+                        <strong class="stat-value">{{ user_saved }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="prediction" class="tab-pane fade">
+            <div class="row col-md-12">
+                <h4>Прогнозування кількості запитів на пошук</h4>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <input type="number" name="year" class="form-control" id="year" placeholder="Рік">
+                        <span id="error-text" class="error text-danger" style="display:block; margin-top: 5px;"
+                              ng-bind="error_text" ng-show="error_text" ng-cloak></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="btn btn-default" id="stats-btn"
+                             data-url="{{ reverse_url('admin-statistics', 228) }}"
+                             ng-click="stats_request()">
+                            <span class="glyphicon glyphicon-signal"></span>
+                            Статистика за рік
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="btn btn-default" id="pred-btn"
+                             data-url="{{ reverse_url('admin-prediction', 228) }}"
+                             ng-click="pred_request()">
+                            <span class="glyphicon glyphicon-cloud"></span>
+                            Прогноз на наступний рік
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-show="loading">
+                        Завантаження...
+                    </div>
+                    <img class="stats-img col-xs-12" src="{{!stats_img}}" ng-show="stats_img && !loading" ng-cloak/>
+                    <img class="stats-img col-xs-12" src="{{!pred_img}}" ng-show="pred_img && !loading" ng-cloak/>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+{% end %}
+
+{% block additional_js %}
+    <script src="{{ static_url('js/admin.js') }}"></script>
 {% end %}

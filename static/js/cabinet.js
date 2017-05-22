@@ -15,6 +15,23 @@ travel.controller('cabinetCtrl', function($scope, $http) {
         }
     };
 
+    $scope.flight_popup = function (guid) {
+        $scope.flights_loading = true;
+
+        var url = $('#flights-open').attr('data-url').replace('42069', guid);
+        $('#flightModal').modal();
+
+        $http.get(url)
+            .then(function (response) {
+                $scope.flights_loading = false;
+                if (response.data.type === 'success') {
+                    $scope.flights = response.data.flights;
+                }
+            }, function (response) {
+                $scope.flights_loading = false;
+            });
+    };
+
     $http.get($('.main-table').attr('data-url'))
         .then(function (response) {
             if (response.data.type === 'success') {

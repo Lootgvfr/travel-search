@@ -22,6 +22,7 @@ body{
     min-height: 250px;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px 25px 10px 25px;
+    margin-bottom: 10px;
 }
 
 .navbar-right{
@@ -34,4 +35,10 @@ body{
 
 #login, #register{
     margin-bottom: 30px;
+}
+
+.stat-value{
+    margin-left: 15px;
+    margin-bottom: 10px;
+    display: block;
 }

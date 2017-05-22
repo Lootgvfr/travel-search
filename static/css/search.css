@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body.modal-open {
+    overflow: inherit;
+}
+
 .main-container{
     background-color: rgba(247, 247, 247, 0.75);
     margin-bottom: 20px;
@@ -116,4 +120,39 @@
 
 #requests{
     padding-top: 10px;
+}
+
+.modal-dialog{
+    width: 75%;
+}
+
+.flight-part{
+    display: inline;
+}
+
+.sm-text{
+    font-size: 10px;
+}
+
+.flight-row{
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0 10px 0;
+}
+
+.airline{
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+.airline-cont{
+    padding-top: 3px;
+}
+
+.not-path{
+    padding-top: 7px;
+}
+
+.popup-table-header{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 7px;
 }

@@ -36,6 +36,48 @@ class Flight(mongoengine.EmbeddedDocument):
     price_lower = mongoengine.StringField()
     price_upper = mongoengine.StringField()
 
+    def as_dict(self):
+        segments = []
+        for segment in self.flight_segments:
+            seg = {
+                'airport_start_code': segment.airport_start_code,
+                'airport_start_name': segment.airport_start_name,
+                'airport_end_code': segment.airport_end_code,
+                'airport_end_name': segment.airport_end_name,
+                'time_start': segment.time_start,
+                'time_end': segment.time_end,
+                'duration': segment.duration,
+                'airline': segment.airline_name,
+            }
+            segments.append(seg)
+        return {
+            'segments': segments,
+            'duration': self.duration,
+            'airlines': self.airlines,
+            'days': self.operating_days,
+            'price': self.price,
+            'has_price_range': self.has_price_range,
+            'price_lower': self.price_lower,
+            'price_upper': self.price_upper,
+        }
+
+
+class Flights(mongoengine.Document):
+    guid = mongoengine.StringField(required=True)
+    choices = mongoengine.ListField(mongoengine.EmbeddedDocumentField(Flight), required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(Flights, self).__init__(*args, **kwargs)
+        if not self.guid:
+            self.guid = str(uuid.uuid4())
+
+    @property
+    def result(self):
+        res = []
+        for flight in self.choices:
+            res.append(flight.as_dict())
+        return res
+
 
 class Segment(mongoengine.EmbeddedDocument):
     # general fields
@@ -68,7 +110,7 @@ class Segment(mongoengine.EmbeddedDocument):
     time_start = mongoengine.StringField(max_length=10)
     time_end = mongoengine.StringField(max_length=10)
     operating_days = mongoengine.StringField(max_length=50)
-    flights = mongoengine.ListField(mongoengine.EmbeddedDocumentField(Flight))
+    flights = mongoengine.ReferenceField(Flights)
 
 
 class Route(mongoengine.EmbeddedDocument):
@@ -123,6 +165,7 @@ class Route(mongoengine.EmbeddedDocument):
                 seg['time_start'] = segment.time_start
                 seg['time_end'] = segment.time_end
                 seg['days'] = segment.operating_days
+                seg['flights_id'] = segment.flights.guid
 
             segments.append(seg)
 

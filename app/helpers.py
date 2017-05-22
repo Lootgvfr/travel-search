@@ -1,11 +1,14 @@
+import datetime
 import hashlib
 import random
 import json
+import numpy
 
+from calendar import monthrange
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import url_escape
 
-from app.models import CityCache, RequestCache
+from app.models import CityCache, RequestCache, SearchRequest
 from settings import base_api_url_m, headers, headers_m, base_api_url,\
     api_key, city_search_mashape, geonames_base_url, geonames_username
 
@@ -155,3 +158,33 @@ def validate_search_form(required_fields, data):
             })
 
     return result
+
+
+def generate_search_data(year):
+    months = (20, 14, 12, 10, 12, 22, 28, 26, 14, 12, 8, 18, 24)
+
+    x = tuple(15 + 30*i for i in range(len(months)))
+    xp = tuple(i+1 for i in range(366))
+
+    days_counts = tuple(float(v) for v in numpy.interp(xp, x, months))
+
+    total = 0
+    d = 0
+    for month, month_mean in enumerate(months[:-1]):
+        days = monthrange(2016, month + 1)[1]
+        print(month)
+        for day in range(days):
+            dt = datetime.datetime.combine(datetime.date(year=year, month=month + 1, day=day + 1),
+                                           datetime.time.min)
+            count = round(float(numpy.random.normal(days_counts[d], days_counts[d]*0.25)))
+            total += count
+            for _ in range(count):
+                SearchRequest(
+                    req_from='Київ, Україна',
+                    req_to='Каїр, Єгипет',
+                    dt_request=dt
+                ).save()
+            d += 1
+        # end
+    # end
+    return total

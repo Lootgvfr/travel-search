@@ -1,0 +1,81 @@
+<div id="flightModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Альтернативні рейси</h4>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="col-xs-12">
+                    <div class="row table-header popup-table-header">
+                        <div class="col-xs-2 center-cell not-path">
+                            Виліт
+                        </div>
+                        <div class="col-xs-2 center-cell">
+                            Прибуття/пересадка
+                        </div>
+                        <div class="col-xs-2 center-cell not-path">
+                            Прибуття
+                        </div>
+                        <div class="col-xs-2 center-cell not-path">
+                            Дні
+                        </div>
+                        <div class="col-xs-2 center-cell not-path">
+                            Час
+                        </div>
+                        <div class="col-xs-2 center-cell not-path">
+                            Ціна
+                        </div>
+                    </div>
+                    <div class="row flight-row" ng-repeat="flight in flights">
+                        <div class="col-xs-6 med-text">
+                            <div class="col-xs-2 center-cell">
+                                <span class="airport" ng-bind="flight.segments[0].airport_start_code"
+                                     title="{{!flight.segments[0].airport_start_name}}"></span><br/>
+                                <span class="time-flight" ng-bind="flight.segments[0].time_start"></span>
+                            </div>
+                            <div ng-repeat="seg in flight.segments">
+                                <div class="col-xs-3 center-cell sm-text airline-cont">
+                                    <span class="airline" ng-bind="seg.airline" ></span><br/>
+                                    <span class="duration-flight" ng-bind="seg.duration"></span>
+                                </div>
+                                <div class="col-xs-2 center-cell">
+                                    <span class="airport" ng-bind="seg.airport_end_code"
+                                         title="{{!seg.airport_end_name}}"></span><br/>
+                                    <span class="time-flight" ng-bind="seg.time_end"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 center-cell med-text not-path">
+                            <div ng-switch="flight.days">
+                                <div ng-switch-when="Кожен день">
+                                    <span ng-bind="flight.days"></span>
+                                </div>
+                                <div ng-switch-default>
+                                    <div title="{{!flight.days}}">
+                                        Певні дні
+                                        <span class="glyphicon glyphicon-info-sign"
+                                              style="margin-top:6px;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 center-cell med-text not-path" ng-bind="flight.duration">
+                        </div>
+                        <div class="col-xs-2 center-cell med-text not-path">
+                            <div title="{{!flight.price_lower + ' до ' + flight.price_upper}}">
+                                <div ng-bind="flight.price" class="price-text"></div>
+                                <span ng-show="flight.has_price_range"
+                                      class="glyphicon glyphicon-info-sign"
+                                      style="margin-top:4px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-show="flights_loading">
+                        Завантаження...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,11 +5,11 @@ from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import url_escape
 
 from app.models import CityCache, Route, Segment, Flight, \
-    FlightSegment, TransportType, SavedOffer
+    FlightSegment, TransportType, SavedOffer, Flights
 from settings import api_key, base_api_url, headers
 
 
-class Backend:
+class SearchBackend:
     _base_flags = [
         'noFerry',
         'noCar',
@@ -240,10 +240,11 @@ class Backend:
                             flight.flight_segments = hops
                             flight.duration_raw = duration
                             flight.duration = self._parse_duration(duration)
-                            flight.airlines = ', '.join(a for a in airlines)
+                            flight.airlines = ', '.join(a for a in set(airlines))
                             flights.append(flight)
 
-                        seg.flights = flights
+                        flights_obj = Flights(choices=flights).save()
+                        seg.flights = flights_obj
                 # end
                 segments.append(seg)
             # end

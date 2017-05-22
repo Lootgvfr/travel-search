@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% end %}</title>
+    <link href="/static/third-party/tether.min.css" rel="stylesheet">
     <link href="/static/third-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ static_url('css/base.css') }}" rel="stylesheet">
     {% block additional_styles %}{% end %}
 </head>
-<body>
+<body style="background-image: url({{ static_url('images/background.jpg') }});">
     <nav class="navbar navbar-inverse navtop">
         <div class="container-fluid">
             <div class="col-md-8 col-md-offset-2">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ reverse_url('admin-home') }}">Admin home</a></li>
+                    <li><a href="{{ reverse_url('admin-home') }}">Головна</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Hello, <strong>{{ current_user.username }}</strong></a></li>
-                    <li><a href="{{ reverse_url('home') }}">Main site</a></li>
-                    <li><a href="{{ reverse_url('logout') }}">Log out</a></li>
+                    <li><a>Доброго дня, <strong>{{ current_user.username }}</strong></a></li>
+                    <li><a href="{{ reverse_url('home') }}">Основний сайт</a></li>
+                    <li><a href="{{ reverse_url('logout') }}">Вихід</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="col-md-8 col-md-offset-2">
-        <div class="container-fluid main-container">
-            <div class="row">
-                <div class="col-md-12 content">
-                    {% block content %}
-                    {% end %}
-                </div>
-            </div>
+        <div class="container-fluid main-container content">
+            {% block content %}
+            {% end %}
         </div>
     </div>
     <script src="/static/third-party/jquery-3.1.1.js"></script>
+    <script src="/static/third-party/tether.min.js"></script>
     <script src="/static/third-party/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/third-party/angular.min.js"></script>
+    <script src="/static/third-party/angular-animate.min.js"></script>
     <script src="{{ static_url('js/base.js') }}"></script>
     {% block additional_js %}{% end %}
 </body>

@@ -82,11 +82,15 @@
                                         <div ng-switch-default>
                                             <div title="{{!segment.days}}">
                                                 Певні дні
-                                                <span ng-show="record.has_price_range" class="glyphicon glyphicon-info-sign"
+                                                <span class="glyphicon glyphicon-info-sign"
                                                       style="margin-top:6px;"></span>
                                             </div>
                                         </div>
                                     </div>
+                                    <a href="javascript:void(0)" id="flights-open" ng-click="flight_popup(segment.flights_id)"
+                                         data-url="{{ reverse_url('flights', 42069) }}">
+                                        Інші рейси
+                                    </a>
                                 </div>
                             </div>
                         </div>

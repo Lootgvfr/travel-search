@@ -22,8 +22,9 @@
                         <li><a>Доброго дня, <strong>{{ current_user.username }}</strong></a></li>
                         {% if current_user.is_superuser %}
                             <li><a href="{{ reverse_url('admin-home') }}">Панель адміністратора</a></li>
+                        {% else %}
+                            <li><a href="{{ reverse_url('cabinet') }}">Ваш кабінет</a></li>
                         {% end %}
-                        <li><a href="{{ reverse_url('cabinet') }}">Ваш кабінет</a></li>
                         <li><a href="{{ reverse_url('logout') }}">Вихід</a></li>
                     {% else %}
                         <li><a href="{{ reverse_url('login') }}">Вхід</a></li>
