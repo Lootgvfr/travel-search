@@ -16,6 +16,27 @@ class PredictionBackend:
         self.distance_func = self._distance_euclid
         self.k = 15
 
+    def determination_coeff(self):
+        days = []
+        y = []
+        ym = []
+        for k in self.prediction:
+            days.append(k['day'])
+
+        for i in range(len(days)):
+            y.append(self.stats[i]['count'])
+            ym.append(self.prediction[i]['count'])
+
+        mean = sum(k for k in y)/len(y)
+
+        data_variance = 0
+        model_variance = 0
+        for i in range(len(days)):
+            data_variance += (y[i] - mean)**2
+            model_variance += (ym[i] - mean) ** 2
+
+        return round(model_variance/data_variance, 6)
+
     def prediction_plot(self):
         if not self.prediction:
             res = self._calculate_prediction()

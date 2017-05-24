@@ -96,6 +96,7 @@ class PredictionImgHandler(BaseHandler):
                 'type': 'success',
                 'prediction_url': prediction_url,
                 'statistics_url': backend.statistics_plot(),
+                'coeff': backend.determination_coeff()
             })
         else:
             self.write({

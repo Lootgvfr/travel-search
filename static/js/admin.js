@@ -12,6 +12,7 @@ travel.controller('adminCtrl', function($scope, $http) {
             $scope.error_text = '';
             $scope.stats_img = '';
             $scope.pred_img = '';
+            $scope.coeff = '';
             var url = $('#stats-btn').attr('data-url').replace(228, $('#year').val());
 
             $http.get(url)
@@ -38,6 +39,7 @@ travel.controller('adminCtrl', function($scope, $http) {
             $scope.error_text = '';
             $scope.stats_img = '';
             $scope.pred_img = '';
+            $scope.coeff = '';
             var url = $('#pred-btn').attr('data-url').replace(228, $('#year').val());
 
             $http.get(url)
@@ -45,6 +47,7 @@ travel.controller('adminCtrl', function($scope, $http) {
                     if (response.data.type === 'success') {
                         $scope.stats_img = response.data.statistics_url;
                         $scope.pred_img = response.data.prediction_url;
+                        $scope.coeff = response.data.coeff.toString();
                     }
                     else {
                         $scope.error_text = response.data.message;

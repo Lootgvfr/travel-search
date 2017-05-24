@@ -63,6 +63,11 @@
                     <div style="text-align: center; margin-bottom: 10px; margin-top: 10px; font-size: 16px; font-weight: bold;" ng-cloak ng-show="loading">
                         Завантаження...
                     </div>
+                    <div class="col-xs-12" ng-show="coeff" ng-cloak style="margin: 10px 0 10px 0; font-size: 16px;">
+                        <div class="col-xs-7">
+                            Значення коефіцієнту детермінації <strong class="pull-right" ng-bind="coeff"></strong>
+                        </div>
+                    </div>
                     <img class="stats-img col-xs-12" src="{{!stats_img}}" ng-show="stats_img && !loading" ng-cloak/>
                     <img class="stats-img col-xs-12" src="{{!pred_img}}" ng-show="pred_img && !loading" ng-cloak/>
                 </div>
